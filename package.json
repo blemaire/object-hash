@@ -23,8 +23,12 @@
   "author": "Scott Puleo <puleos@gmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "@babel/core": "^7.4.3",
+    "@babel/preset-env": "^7.4.3",
+    "babelify": "^10.0.0",
     "browserify": "^13.0.0",
     "gulp": "^3.9.0",
+    "gulp-bro": "^1.0.3",
     "gulp-browserify": "^0.5.1",
     "gulp-coveralls": "^0.1.4",
     "gulp-exec": "^2.1.2",
@@ -47,5 +51,8 @@
     "node": ">= 0.10.0"
   },
   "main": "./index.js",
-  "browser": "./dist/object_hash.js"
+  "browser": "./dist/object_hash.js",
+  "dependencies": {
+    "uglify-js": "^3.5.3"
+  }
 }

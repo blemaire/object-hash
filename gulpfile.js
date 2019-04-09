@@ -4,13 +4,14 @@ var gulp = require('gulp');
 var jshint = require('gulp-jshint');
 var exec = require('gulp-exec');
 var stylish = require('jshint-stylish');
-var browserify = require('gulp-browserify');
+var bro = require('gulp-bro');
 var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
 var karma = require('karma');
 var coveralls = require('gulp-coveralls');
 var istanbul = require('gulp-istanbul');
 var mocha = require('gulp-mocha');
+var babelify = require('babelify');
 
 var paths = {
   index: './index.js',
@@ -44,17 +45,18 @@ function lint(src){
 
 gulp.task('dist', function(){
   gulp.src([paths.index])
-    .pipe(browserify({
-      insertGlobals : true,
-      debug: true,
-      standalone: 'objectHash'
+    .pipe(bro({
+      transform: [
+        babelify.configure({ presets: ['@babel/preset-env'] })
+      ]
     }))
-    .pipe(rename('object_hash.js'))
     .pipe(uglify({outSourceMap: true}))
-    .pipe(gulp.dest('./dist'));
+    .pipe(rename('object_hash.js'))
+    .pipe(gulp.dest('./dist'))
+    ;
     // tests
   gulp.src([paths.tests])
-    .pipe(browserify())
+    .pipe(bro())
     .pipe(rename('object_hash_test.js'))
     .pipe(gulp.dest('./dist'));
 });
